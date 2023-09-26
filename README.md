@@ -19,7 +19,7 @@ O usuário terá uma **home** falando um pouco sobre o site, e duas possibilidad
 ## Dependências instaladas
 
 ```sh
-npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nodemon 
+npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nodemon dotenv
 ```
 - **bcrypt:** É uma biblioteca para criptografar senhas. É comumente usada para armazenar senhas de forma segura em bancos de dados.
 - **cookie-parser:** é uma biblioteca que facilita a manipulação de cookies HTTP em aplicativos Node.js. Os cookies são pequenos pedaços de dados armazenados no lado do cliente (navegador) e são frequentemente usados para manter o estado da sessão, lembrar preferências do usuário e realizar a autenticação do usuário.
@@ -28,4 +28,28 @@ npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nod
 - **mysql2:** É um driver para interagir com bancos de dados MySQL a partir de aplicativos Node.js. Ele permite que você execute consultas SQL em um banco de dados MySQL.
 - **sequelize:** Uma biblioteca ORM (Object-Relational Mapping) que simplifica a interação com bancos de dados relacionais, como MySQL, PostgreSQL, SQLite e outros, através de modelos JavaScript.
 - **multer:** Facilita o upload de arquivos, como imagens e documentos, em seu aplicativo Node.js.
+- **dotenv**: permite ler facilmente variaveis de ambiente 
+
+## Criando conexão com o banco de dados
+
+Primeiro, vamos instalar o mysql-server
+
+```sh
+sudo apt install -y mysql-server #instala o mysql
+sudo mysql_secure_installation # inicia os protocolos de segurança para a instalação do mysql
+systemctl status mysql.service # Visualiza se o serviço está mesmo ativo
+sudo mysql -u root # Estabelece uma conexão com o MySql
+
+# Uma vez logado
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Ab12345*';
+CREATE DATABASE nodeapp;
+SHOW DATABASES
+```
+
+Depois, vamos criar um banco de dados chamado **todolist**
+```sh
+create database todolist;
+```
+
+Agora estamos pronto para fazer a integração com o sequelize dentro do banco de dados
 
