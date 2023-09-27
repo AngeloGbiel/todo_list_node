@@ -11,10 +11,12 @@ O usuário terá uma **home** falando um pouco sobre o site, e duas possibilidad
 - **controllers**: intermediario entre o Model e a View (parecido com os das rotas)
 - **db**: conexão com o banco de dados
 - **models**: interação com o banco de dados e com o controllers
-  - **User.js**: interação com o banco de dados do usuário
+  - **User.js**: interação com o banco de dados do usuário (tabela **Users**)
   - **Todo.js**: interação com o banco de dados da lista de tarefas
 - **routes**: conjunto de rotas com base do Controllers
-  - **UserRouter.js:** rotas para manipulação dos usuários dentro do banco:
+  - **UserRouter.js:** rotas para manipulação dos usuários dentro do banco
+- **public:** Diretório para salvar imagens
+  - **images:** images dos usuários
 
 ## Dependências instaladas
 
@@ -50,6 +52,10 @@ Depois, vamos criar um banco de dados chamado **todolist**
 ```sh
 create database todolist;
 ```
-
 Agora estamos pronto para fazer a integração com o sequelize dentro do banco de dados
 
+## Criando Variáveis de ambiente
+- Primeiro, vamos criar um arquivo **.env** na raiz do projeto (pasta backend).
+- Depois, vamos instalar o dotenv
+- Depois vamos executar o comando **source .env**
+- Depois, vamos importar para dentro do **conn.js** e inicializa-lo
