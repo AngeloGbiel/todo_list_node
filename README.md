@@ -21,7 +21,7 @@ O usuário terá uma **home** falando um pouco sobre o site, e duas possibilidad
 ## Dependências instaladas
 
 ```sh
-npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nodemon dotenv
+npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nodemon dotenv express-async-errors
 ```
 - **bcrypt:** É uma biblioteca para criptografar senhas. É comumente usada para armazenar senhas de forma segura em bancos de dados.
 - **cookie-parser:** é uma biblioteca que facilita a manipulação de cookies HTTP em aplicativos Node.js. Os cookies são pequenos pedaços de dados armazenados no lado do cliente (navegador) e são frequentemente usados para manter o estado da sessão, lembrar preferências do usuário e realizar a autenticação do usuário.
@@ -31,6 +31,7 @@ npm i bcrypt cookie-parser cors express jsonwebtoken mysql2 sequelize multer nod
 - **sequelize:** Uma biblioteca ORM (Object-Relational Mapping) que simplifica a interação com bancos de dados relacionais, como MySQL, PostgreSQL, SQLite e outros, através de modelos JavaScript.
 - **multer:** Facilita o upload de arquivos, como imagens e documentos, em seu aplicativo Node.js.
 - **dotenv**: permite ler facilmente variaveis de ambiente 
+- **express-async-errors**: O express-async-errors é um pacote Node.js que facilita o tratamento de erros assíncronos em aplicativos Express. Ele permite que você capture exceções assíncronas lançadas em rotas ou middleware e as direcione para o manipulador de erros do Express, em vez de deixá-las serem propagadas e potencialmente quebrarem seu aplicativo.
 
 ## Criando conexão com o banco de dados
 

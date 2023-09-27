@@ -16,7 +16,6 @@ const User = conn.define('User',{
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: false
     },
 })
 
