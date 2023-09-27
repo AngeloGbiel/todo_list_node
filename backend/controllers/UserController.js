@@ -1,3 +1,4 @@
+import createToken from "../helper/create-token.js";
 import User from "../models/User.js";
 import { hash, genSalt } from "bcrypt";
 
@@ -34,7 +35,6 @@ export default class UserController{
         //create a password security
         const salt = await genSalt(12)
         const passwordHash = await hash(password, salt)
-        console.log(passwordHash)
 
         const user = {
             name,
@@ -43,7 +43,7 @@ export default class UserController{
             image: image ? image : null
         }
         await User.create(user).then((response)=>{
-            console.log(response)
+            createToken(response,res)
         })
     }
 }
