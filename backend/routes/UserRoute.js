@@ -6,6 +6,7 @@ const router = Router()
 
 router.post('/register', ImageUpload.single('image'), UserController.register)
 router.post('/login', UserController.login)
+router.get('/catchuser', UserController.catchUser)
 
 
 export default router;

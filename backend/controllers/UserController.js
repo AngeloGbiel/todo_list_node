@@ -1,4 +1,5 @@
 import createToken from "../helper/create-token.js";
+import getToken from "../helper/get-token.js";
 import User from "../models/User.js";
 import { hash, genSalt, compare } from "bcrypt";
 
@@ -77,5 +78,22 @@ export default class UserController{
             })
         }
         createToken(checkUserExist, res)
+    }
+    static async catchUser(req,res){
+        if(req.headers.authorization){
+            const token = getToken(req.headers.authorization)
+            console.log(token)
+            const user = User.findOne({
+                where:{id:token.id},
+                attributes: {exclude:['password']}, //não mostra a senha
+                raw: true
+            }).then((value)=>{
+                res.status(200).json(value)
+            }).catch((err)=>{
+                res.json({message:'Token inválido'})
+            })
+        }else{
+            console.log('não autorizado')
+        }
     }
 }
