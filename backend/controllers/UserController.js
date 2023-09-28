@@ -1,6 +1,6 @@
 import createToken from "../helper/create-token.js";
 import User from "../models/User.js";
-import { hash, genSalt } from "bcrypt";
+import { hash, genSalt, compare } from "bcrypt";
 
 export default class UserController{
     static async register(req,res){
@@ -45,5 +45,37 @@ export default class UserController{
         await User.create(user).then((response)=>{
             createToken(response,res)
         })
+    }
+    static async login(req,res){
+        const {email, password} = req.body
+        
+        //valida se o usuário preencheu os campos
+        if(!email){
+            return res.status(422).json({
+                message: 'email is mandatory!!'
+            })
+        }
+        if(!password){
+            return res.status(422).json({
+                message: 'Password is mandatory!!'
+            })
+        }
+        const checkUserExist = await User.findOne({
+            where:{email}
+        })
+        //valida se o usuário existe
+        if(!checkUserExist){
+            return res.status(422).json({
+                message: 'Email or password incorrect'
+            })
+        }
+        //comparar as senhas
+        const checkPassword = await compare(password, checkUserExist.password)
+        if(!checkPassword || !checkUserExist){
+            return res.status(422).json({
+                message: 'Email or password incorrect'
+            })
+        }
+        createToken(checkUserExist, res)
     }
 }
