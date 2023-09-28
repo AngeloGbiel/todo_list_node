@@ -5,7 +5,7 @@ import { hash, genSalt } from "bcrypt";
 export default class UserController{
     static async register(req,res){
         const {name,email,password} = req.body;
-        const image = ''
+        let image = ''
         if(!name){
             return res.status(422).json({
                 message: 'Name is mandatory!!'
@@ -21,7 +21,7 @@ export default class UserController{
                 message: 'Password is mandatory!!'
             })
         }
-        req.file ? console.log('test1'): console.log('test2') //mudar depois
+        req.file && (image = req.file.filename);
         //cheacar se o usuário ja existe através do email
         const checkUserExist = await User.findOne({
             where: {email:email}
