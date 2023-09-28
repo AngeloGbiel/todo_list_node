@@ -79,7 +79,7 @@ export default class UserController{
         }
         createToken(checkUserExist, res)
     }
-    static async catchUser(req,res){
+    static async getUser(req,res){
         if(req.headers.authorization){
             const token = getToken(req.headers.authorization)
             console.log(token)
@@ -95,5 +95,33 @@ export default class UserController{
         }else{
             console.log('não autorizado')
         }
+    }
+    static async editUser(req,res){
+        const token = getToken(req.headers.authorization)
+        User.findOne({
+            where: {id:token.id}
+        }).then(()=>{
+            const name = req.body.name
+            let image = ''
+            if(req.file){
+                image = req.file.filename;
+            }
+            if(!name){
+                return res.status(422).json({
+                    message: 'Name is mandatory!!'
+                })
+            }
+            User.update({name: name, image: image ? image : token.image},{
+                where: {id:token.id}
+            }).then(()=>{
+                return res.status(200).json({
+                    message: 'Updated successfully!!'
+                })
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }).catch(()=>{
+            res.json({message:'Token inválido'})
+        })
     }
 }

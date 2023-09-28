@@ -6,7 +6,8 @@ const router = Router()
 
 router.post('/register', ImageUpload.single('image'), UserController.register)
 router.post('/login', UserController.login)
-router.get('/catchuser', UserController.catchUser)
+router.get('/getuser', UserController.getUser)
+router.patch('/edit', ImageUpload.single('image'), UserController.editUser)
 
 
 export default router;
