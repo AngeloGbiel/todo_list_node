@@ -2,7 +2,8 @@ import express from 'express'
 import conn from './db/conn.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import router from './routes/UserRoute.js'
+import UserRouter from './routes/UserRoute.js'
+import TodoRouter from './routes/TodoRoutes.js'
 import "express-async-errors"
 
 const app = express()
@@ -15,7 +16,9 @@ app.use(cookieParser()) // Use o cookie-parser como middleware
 app.use(cors({ // Solve CORS - allows the API to access this route without issue
     credentials: true, origin: 'http://localhost:5173' //porta do front end
 }))
-app.use(router)
+app.use(UserRouter)
+app.use('/todo', TodoRouter)
+
 app.use( //lida com tratamentos de erros
     (err,req,res,next) =>{
         return res.json({
@@ -25,7 +28,7 @@ app.use( //lida com tratamentos de erros
     }
 )
 conn
-// .sync({force:true})
+//.sync({force:true})
 .sync()
 .then(()=>{
     app.listen(port,()=>{
