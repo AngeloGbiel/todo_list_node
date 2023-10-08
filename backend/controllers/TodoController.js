@@ -25,6 +25,16 @@ export default class TodoController {
             })
         })
     }
+    static async allTask(req,res){
+        const user = getToken(req.headers.authorization);
+        await Todo.findAll({
+            where:{UserId: user.id}
+        }).then((response)=>{
+            res.status(200).send(response)
+        }).catch((err)=>{
+            response.status(422).send(err)
+        })
+    }
     static async getTask(req,res){
         const id = req.params.id
         const user = getToken(req.headers.authorization)
