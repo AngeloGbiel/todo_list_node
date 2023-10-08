@@ -4,8 +4,9 @@ import authenticate from "../helper/authenticate.js";
 
 const router = Router()
 
-router.post('/add', authenticate, TodoController.addTodo)
+router.post('/add', authenticate, TodoController.addTask)
 router.get('/all', authenticate,TodoController.allTask)
 router.get('/get/:id', authenticate, TodoController.getTask)
+router.patch('/edit/:id', authenticate, TodoController.editTask)
 
 export default router;

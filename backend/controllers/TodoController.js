@@ -3,7 +3,7 @@ import Todo from "../models/Todo.js"
 import User from "../models/User.js";
 
 export default class TodoController {
-    static async addTodo(req,res){
+    static async addTask(req,res){
         const task = req.body.task;
         const priority = false;
         const user = getToken(req.headers.authorization)
@@ -38,7 +38,6 @@ export default class TodoController {
     static async getTask(req,res){
         const id = req.params.id
         const user = getToken(req.headers.authorization)
-        console.log(user)
         await Todo.findOne({
             where:{id},
             raw: true
@@ -49,6 +48,33 @@ export default class TodoController {
                 })
             }
             res.status(200).send(response)
+        })
+    }
+    static async editTask(req,res){
+        const id = req.params.id;
+        const user = getToken(req.headers.authorization);
+        const newTask = req.body.task
+        if(!newTask){
+            return res.status(401).json({
+                message: "Adcione uma task"
+            })
+        }
+        const taskUser = await Todo.findOne({
+            where:{id},
+            raw: true
+        })
+        if(taskUser.UserId != user.id){
+            return res.status(422).json({
+                message: "Task Não encontrado"
+            })
+        }
+        taskUser.task = newTask
+        await Todo.update(taskUser, {
+            where:{id}
+        }).then((response)=>{
+            res.status(200).json({
+                message: "Atualizado com sucesso"
+            })
         })
     }
 }
