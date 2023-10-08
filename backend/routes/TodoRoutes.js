@@ -5,5 +5,6 @@ import authenticate from "../helper/authenticate.js";
 const router = Router()
 
 router.post('/add', authenticate, TodoController.addTodo)
+router.get('/get/:id', authenticate, TodoController.getTask)
 
 export default router;
