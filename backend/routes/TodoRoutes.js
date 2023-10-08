@@ -9,5 +9,6 @@ router.get('/all', authenticate,TodoController.allTask)
 router.get('/get/:id', authenticate, TodoController.getTask)
 router.patch('/edit/:id', authenticate, TodoController.editTask)
 router.patch('/priority/:id', authenticate, TodoController.priorityTask)
+router.delete('/delete/:id', authenticate, TodoController.deleteTask)
 
 export default router;

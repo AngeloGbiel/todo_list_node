@@ -106,4 +106,29 @@ export default class TodoController {
             })
         })
     }
+    static async deleteTask(req,res){
+        const id = req.params.id;
+        const user = getToken(req.headers.authorization);
+        await Todo.findOne({
+            where:{id},
+            raw: true
+        }).then((response)=>{
+            if(response.UserId != user.id){
+                return res.status(422).json({
+                    message: "Task Não encontrado"
+                })
+            }
+            Todo.destroy({
+                where:{id:id}
+            }).then(()=>{
+                res.status(200).json({
+                    message: "Task removida com sucesso!"
+                })
+            })
+        }).catch(()=>{
+            return res.status(422).json({
+                message: "Task Não encontrado"
+            })
+        })
+    }
 }
