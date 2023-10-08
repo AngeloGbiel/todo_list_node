@@ -48,6 +48,10 @@ export default class TodoController {
                 })
             }
             res.status(200).send(response)
+        }).catch(()=>{
+            return res.status(422).json({
+                message: "Task Não encontrado"
+            })
         })
     }
     static async editTask(req,res){
@@ -59,21 +63,46 @@ export default class TodoController {
                 message: "Adcione uma task"
             })
         }
-        const taskUser = await Todo.findOne({
+        await Todo.findOne({
             where:{id},
             raw: true
-        })
-        if(taskUser.UserId != user.id){
-            return res.status(422).json({
-                message: "Task Não encontrado"
-            })
-        }
-        taskUser.task = newTask
-        await Todo.update(taskUser, {
-            where:{id}
         }).then((response)=>{
-            res.status(200).json({
-                message: "Atualizado com sucesso"
+            if(response.UserId != user.id){
+                return res.status(422).json({
+                    message: "Task Não encontrado"
+                })
+            }
+            response.task = newTask
+            Todo.update(response, {
+                where:{id}
+            }).then((response)=>{
+                res.status(200).json({
+                    message: "Atualizado com sucesso"
+                })
+            })
+        })
+    }
+    static async priorityTask(req,res){
+        const id = req.params.id;
+        const user = getToken(req.headers.authorization);
+        await Todo.findOne({
+            where:{id},
+            raw: true
+        }).then((response)=>{
+            if(response.UserId != user.id){
+                return res.status(422).json({
+                    message: "Task Não encontrado"
+                })
+            }
+            const CurrentPriority = response.priority
+            const newPriority = CurrentPriority == 0 ? 1 : 0 //muda a prioridade
+            response.priority = newPriority
+            Todo.update(response,{
+                where:{id:id}
+            }).then(()=>{
+                res.status(200).json({
+                    message: 'Atualizado com sucesso!'
+                })
             })
         })
     }
