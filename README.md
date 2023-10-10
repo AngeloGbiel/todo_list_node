@@ -122,7 +122,7 @@ npm run dev
 
 Instalando as bibliotecas de **css in js** e de **manipulação de rotas**
 ```sh
-npm i styled-components react-router-dom react-hook-form
+npm i styled-components react-router-dom react-hook-form react-hook-form
 ```
 
 Atualizando os plugins do styled-components

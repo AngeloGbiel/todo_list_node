@@ -14,10 +14,10 @@ export default function App(){
   },[navigate, location.pathname])
 
   return(
-    <>
+    <div style={{display:"flex"}}>
       <CSSreset/>
       <NavBar/>
       <Outlet/>
-    </>
+    </div>
   )
 }
