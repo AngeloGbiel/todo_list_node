@@ -80,6 +80,10 @@ export default class TodoController {
                     message: "Atualizado com sucesso"
                 })
             })
+        }).catch(()=>{
+            return res.status(422).json({
+                message: "Task Não encontrado"
+            })
         })
     }
     static async priorityTask(req,res){
@@ -103,6 +107,10 @@ export default class TodoController {
                 res.status(200).json({
                     message: 'Atualizado com sucesso!'
                 })
+            })
+        }).catch(()=>{
+            return res.status(422).json({
+                message: "Task Não encontrado"
             })
         })
     }

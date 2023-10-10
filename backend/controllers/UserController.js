@@ -1,7 +1,8 @@
 import createToken from "../helper/create-token.js";
 import getToken from "../helper/get-token.js";
 import User from "../models/User.js";
-import { hash, genSalt, compare } from "bcrypt";
+// import { hash, genSalt, compare } from "bcrypt";
+import bcrypt from 'bcryptjs' //versão atual
 
 export default class UserController {
     static async register(req, res) {
@@ -34,15 +35,16 @@ export default class UserController {
         }
 
         //create a password security
-        const salt = await genSalt(12)
-        const passwordHash = await hash(password, salt)
-
+        const salt = await bcrypt.genSalt(12)
+        const passwordHash = await bcrypt.hash(password, salt) //problema está aqui
+        
         const user = {
             name,
             email,
             password: passwordHash,
             image: image ? image : null
         }
+        console.log(user)
         await User.create(user).then((response) => {
             createToken(response, res)
         })
@@ -71,7 +73,7 @@ export default class UserController {
             })
         }
         //comparar as senhas
-        const checkPassword = await compare(password, checkUserExist.password)
+        const checkPassword = await bcrypt.compare(password, checkUserExist.password)
         if (!checkPassword || !checkUserExist) {
             return res.status(422).json({
                 message: 'Email or password incorrect'
