@@ -100,3 +100,48 @@ E podemos visualizar os logs de cada container, e também acessa-los caso necess
 docker logs hash_container -h #logs do container
 docker exec -it hash_container sh #acessar o container por um terminal sh
 ```
+
+# Frontend
+Para o frontend, vamos utilizar o **react** com a ferramente de construção **vite**. Primeiro, vamos executar o seguinte comando:
+```bash
+npm create vite@latest
+```
+Vamos colocar o nome do nosso arquivo de frontend, escolher o react e depois Typescript. Após isso, vamos executar os seguintes comando:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Arquivos de configuração react
+- **.eslintrc.cjs**: é usado em projetos React (e em outros projetos JavaScript) para configurar as regras e as configurações do ESLint. ESLint é uma ótima ferramenta para ajudar a automatizar a padronização do código em nosso projeto. Com ela conseguimos definir regras de padronização, achar códigos fora do padrão e consertá-los automaticamente
+- **vite.config.ts**: esse arquivo é usado para configurar o Vite. Ele pode conter configurações relacionadas a plugins, roteamento, aliases de importação, entre outras coisas.
+- **tsconfig.json**: especifica os arquivos raiz e as configurações de compilação necessárias para o projeto. Projetos JavaScript podem ter um arquivo jsconfig. json , que tem quase o mesmo propósito, mas possui algumas flags do compilador relacionadas ao JavaScript que já estão habilitadas por padrão.
+
+## Instalando dependências react
+
+Instalando as bibliotecas de **css in js** e de **manipulação de rotas**
+```sh
+npm i styled-components react-router-dom
+```
+
+Atualizando os plugins do styled-components
+```sh
+npm uninstall @babel/plugin-proposal-class-properties @babel/plugin-proposal-object-rest-spread
+npm install @babel/plugin-transform-class-properties @babel/plugin-transform-object-rest-spread --save-dev
+```
+Instalando as dependências de TS das bibliotecas
+```sh
+npm i -D @types/styled-components 
+```
+```sh
+npm install --save @types/react-router-dom
+```
+
+## Erro de "arquivo não encontrado"
+Caso apareça um erro do arquivo tsconfig.json, vamos adcionar a seguinte linha de codígo ao arquivo:
+```json
+"include": ["src/**/*.ts", "src/**/*.tsx"]
+```
+
+Estrutura de Pastas
