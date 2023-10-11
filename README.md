@@ -122,7 +122,7 @@ npm run dev
 
 Instalando as bibliotecas de **css in js** e de **manipulação de rotas**
 ```sh
-npm i styled-components react-router-dom react-hook-form react-hook-form
+npm i styled-components react-router-dom react-hook-form react-hook-form js-cookie
 ```
 
 Atualizando os plugins do styled-components
@@ -136,6 +136,9 @@ npm i -D @types/styled-components
 ```
 ```sh
 npm install --save @types/react-router-dom
+```
+```sh
+npm i @types/js-cookie
 ```
 
 ## Erro de "arquivo não encontrado"

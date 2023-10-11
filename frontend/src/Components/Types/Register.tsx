@@ -4,3 +4,7 @@ export interface FormRegister {
     password: string;
     image: string[];
 }
+export interface FormLogin {
+    email: "string",
+    password: "string"
+}

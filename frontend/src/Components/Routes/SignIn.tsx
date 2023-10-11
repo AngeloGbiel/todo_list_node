@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useContext } from "react";
+import { UserContext } from "../Context/Context";
+import { FormLogin } from "../Types/Register";
 
 const SignUpStyled = styled.div`
   width: calc(100% - 20rem);
@@ -60,21 +63,15 @@ const SignUpStyled = styled.div`
   }
 `;
 
-interface FormInput {
-  name: string;
-  email: string;
-  password: string;
-  image: [string];
-}
-
 export default function SignUp() {
+  const {loginUser} = useContext(UserContext)
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInput>();
-  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
-    console.log(data);
+  } = useForm<FormLogin>();
+  const onSubmit: SubmitHandler<FormLogin> = async (data: FormLogin) => {
+    loginUser(data);
   };
   return (
     <SignUpStyled>

@@ -16,7 +16,9 @@ const createToken = (user,res) =>{
         expiresIn: "1h"
     })
     res.cookie( //armazena o token no cookie
-        'token',token, {maxAge: 3600000}
+        'token',token, {
+            maxAge: 3600000,
+        }
     ).json({
         message: "Você está autenticado"
     })

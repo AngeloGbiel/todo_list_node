@@ -1,5 +1,5 @@
 import Api from "../Api/Api";
-import { FormRegister } from "../Types/Register";
+import { FormRegister,FormLogin } from "../Types/Register";
 
 export default function Auth() {
   async function registerUser(user: FormRegister) {
@@ -27,5 +27,14 @@ export default function Auth() {
         return err
     })
   }
-  return { registerUser };
+
+  async function loginUser(user: FormLogin){
+    console.log(user)
+    await Api.post('/login', user).then(()=>{
+        console.log('foi')
+    }).catch((err)=>{
+        return err
+    })
+  }
+  return { registerUser,loginUser };
 }
