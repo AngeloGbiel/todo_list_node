@@ -3,6 +3,7 @@ import { CSSreset } from "./Components/CSSreset"
 import NavBar from "./Components/NavBar"
 import { useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
+import { UserProvider } from "./Components/Context/Context"
 
 export default function App(){
   const navigate = useNavigate()
@@ -14,10 +15,12 @@ export default function App(){
   },[navigate, location.pathname])
 
   return(
-    <div style={{display:"flex"}}>
-      <CSSreset/>
-      <NavBar/>
-      <Outlet/>
-    </div>
+    <UserProvider>
+      <div style={{display:"flex"}}>
+        <CSSreset/>
+        <NavBar/>
+        <Outlet/>
+      </div>
+    </UserProvider>
   )
 }
