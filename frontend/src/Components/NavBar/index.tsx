@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import Profile from "../Assets/Profile.png";
 import * as Ai from "react-icons/ai";
 import * as Fi from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../Context/Context";
 
 const NavBarStyled = styled.div`
   height: 100vh;
@@ -33,31 +35,35 @@ const NavBarStyled = styled.div`
 `;
 
 const LinkStyled = styled(Link)`
-    color: white;
-    display: flex;
-    gap: 10px;
-    text-decoration: none;
-    font-size: 1.2rem;
-`
-
+  color: white;
+  display: flex;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 1.2rem;
+`;
 
 export default function SignUp() {
+  const { authorization } = useContext(UserContext);
   return (
     <NavBarStyled>
       <header>
         <img src={Profile} alt="Profile" />
         <h2>Welcome!!</h2>
       </header>
-      <main>
-        <LinkStyled to={'register'} className="register">
-          <p>Sign Up</p>
-          <Ai.AiOutlineRead />
-        </LinkStyled>
-        <LinkStyled to={'login'} className="login">
-          <p>Sign In</p>
-          <Fi.FiLogIn />
-        </LinkStyled>
-      </main>
+      {authorization ? (
+        <p>Autenticado</p>
+      ) : (
+        <main>
+          <LinkStyled to={"register"} className="register">
+            <p>Sign Up</p>
+            <Ai.AiOutlineRead />
+          </LinkStyled>
+          <LinkStyled to={"login"} className="login">
+            <p>Sign In</p>
+            <Fi.FiLogIn />
+          </LinkStyled>
+        </main>
+      )}
     </NavBarStyled>
   );
 }
