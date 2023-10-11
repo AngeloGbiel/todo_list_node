@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import Api from "../Api/Api";
 import { FormRegister,FormLogin } from "../Types/Register";
+import Cookies from "js-cookie";
+import { UserContext } from "../Context/Context";
 
 export default function Auth() {
+  const {setToken} = useContext(UserContext)
   async function registerUser(user: FormRegister) {
     const UserData: Record<string, string> = {
       // Record<string, string>: Isso é uma anotação de tipo em TypeScript.
@@ -31,7 +35,7 @@ export default function Auth() {
   async function loginUser(user: FormLogin){
     console.log(user)
     await Api.post('/login', user).then(()=>{
-        console.log('foi')
+        setToken(Cookies.get('token')!)
     }).catch((err)=>{
         return err
     })
