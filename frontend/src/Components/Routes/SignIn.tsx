@@ -86,10 +86,11 @@ export default function SignUp() {
             className="field"
             {...register("email", { required: true })}
           />
-          {errors?.email?.type === "required" && (
-            <span>This field is required</span>
-          )}
-          {!userExist && <span>Invalid email or password</span>}
+          {errors?.email?.type === "required" ? (
+            <span>All field is required</span>
+          ) : !userExist ? (
+            <span>Invalid email or password</span>
+          ) : null }
 
           {/* password */}
           <input
@@ -98,10 +99,11 @@ export default function SignUp() {
             className="field"
             {...register("password", { required: true })}
           />
-          {errors?.password?.type === "required" && (
-            <span>This field is required</span>
-          )}
-          {!userExist && <span>Invalid email or password</span>}
+          {errors?.email?.type === "required" ? (
+            <span>All field is required</span>
+          ) : !userExist ? (
+            <span>Invalid email or password</span>
+          ) : null }
 
           <input type="submit" value={"Sign In"} />
         </form>

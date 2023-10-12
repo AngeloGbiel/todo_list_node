@@ -97,10 +97,12 @@ export default function SignUp() {
             className="field"
             {...register("email", { required: true })}
           />
-          {errors?.email?.type === "required" && (
+
+          {!userExist ? (
+            <span>This email exist already</span>
+          ) : errors?.email?.type === "required" ? (
             <span>This field is required</span>
-          )}
-          {!userExist && <span>This email exist already</span>}
+          ) : null}
 
           {/* password */}
           <input
