@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+// import { useEffect } from "react";
+import { useState } from "react";
 import Api from "../Api/Api";
-import { FormRegister,FormLogin } from "../Types/Register";
+import { FormLogin, FormRegister } from "../Types/Register";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
-  const [token,setToken] = useState<string>('')
-
-  useEffect(()=>{
-    setToken(Cookies.get('token')!)
-  },[])
+  const [authorization, setAuthorization] = useState<boolean>(false);
+  const [userExist, setUserExist] = useState<boolean>(true);
+  const [token, setToken] = useState<string>("");
+  const navigate = useNavigate();
 
   async function registerUser(user: FormRegister) {
     const UserData: Record<string, string> = {
@@ -29,21 +30,40 @@ export default function Auth() {
       formData.append(key, UserData[key]);
     });
 
-    await Api.post('/register',formData).then((response)=>{
-        return response.data
-    }).catch((err)=>{
-        return err
-    })
+    await Api.post("/register", formData)
+      .then(() => {
+        authenticate(Cookies.get("token")!);
+      })
+      .catch((err) => {
+        setUserExist(false);
+        return err;
+      });
   }
 
-  async function loginUser(user: FormLogin){
-    console.log(user)
-    await Api.post('/login', user).then(()=>{
-      setToken(Cookies.get('token')!)
-    }).catch((err)=>{
-        return err
-    })
+  async function loginUser(user: FormLogin) {
+    await Api.post("/login", user)
+      .then((response) => {
+        authenticate(Cookies.get("token")!);
+        return response.data;
+      })
+      .catch((err) => {
+        setUserExist(false);
+        return err;
+      });
   }
+  const authenticate = async (data: string) => {
+    await Api.get("getuser", {
+      headers: {
+        Authorization: `Bearer ${data}`,
+      },
+    }).then((response) => {
+      console.log(response);
+      setAuthorization(true);
+      setToken(data);
+      setUserExist(true);
+      navigate("/todo");
+    });
+  };
 
-  return { registerUser,loginUser,token};
+  return { registerUser, loginUser, authorization, userExist, token };
 }

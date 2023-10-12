@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { FormRegister } from "../Types/Register";
 import { useContext } from "react";
 import { UserContext } from "../Context/Context";
+// import Cookies from "js-cookie";
 
 const SignUpStyled = styled.div`
   width: calc(100% - 20rem);
@@ -64,7 +65,7 @@ const SignUpStyled = styled.div`
 `;
 
 export default function SignUp() {
-  const {registerUser} = useContext(UserContext)
+  const {registerUser,userExist} = useContext(UserContext)
   const {
     register,
     handleSubmit,
@@ -99,6 +100,7 @@ export default function SignUp() {
           {errors?.email?.type === "required" && (
             <span>This field is required</span>
           )}
+          {!userExist && <span>This email exist already</span>}
 
           {/* password */}
           <input

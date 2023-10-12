@@ -1,44 +1,32 @@
-import { ReactNode, createContext, useEffect, useState} from "react";
+import { ReactNode, createContext,} from "react";
 import { FormLogin, FormRegister } from "../Types/Register";
 import Auth from '../Auth/Auth'
-import Api from "../Api/Api";
-// import Api from "../Api/Api";
 
 interface ContextProvider {
     children: ReactNode
 }
 interface ContextType {
     registerUser: (user:FormRegister) => void,
-    loginUser: (user: FormLogin) => void,
+    authorization: boolean,
     token: string,
-    authorization: boolean
+    loginUser: (user: FormLogin) => void,
+    userExist: boolean
 }
 
 const UserContext = createContext<ContextType>({} as ContextType)
 
 const UserProvider = ({children}:ContextProvider) =>{
-    const [authorization, setAuthorization] = useState<boolean>(false)
-    const {registerUser,loginUser,token} = Auth()
-    useEffect(()=>{
-        if(token){
-            Api.get('getuser', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(()=>{
-                setAuthorization(true)
-            }).catch((err)=>{
-                setAuthorization(false)
-                return err
-            })
-        }
-    },[token])
+    const {registerUser,loginUser, authorization, userExist,token} = Auth()
+   
+    
+
     return(
         <UserContext.Provider value={{
             registerUser,
-            loginUser,
+            authorization,
             token,
-            authorization
+            loginUser,
+            userExist
         }}>
             {children}
         </UserContext.Provider>

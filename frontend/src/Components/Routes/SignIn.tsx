@@ -64,13 +64,14 @@ const SignUpStyled = styled.div`
 `;
 
 export default function SignUp() {
-  const {loginUser} = useContext(UserContext)
+  const {loginUser,userExist} = useContext(UserContext)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormLogin>();
   const onSubmit: SubmitHandler<FormLogin> = async (data: FormLogin) => {
+    // authenticate(Cookies.get('token')!)
     loginUser(data);
   };
   return (
@@ -88,6 +89,7 @@ export default function SignUp() {
           {errors?.email?.type === "required" && (
             <span>This field is required</span>
           )}
+          {!userExist && <span>Invalid email or password</span>}
 
           {/* password */}
           <input
@@ -99,6 +101,7 @@ export default function SignUp() {
           {errors?.password?.type === "required" && (
             <span>This field is required</span>
           )}
+          {!userExist && <span>Invalid email or password</span>}
 
           <input type="submit" value={"Sign In"} />
         </form>
