@@ -52,7 +52,7 @@ export default function Auth() {
         return err;
       });
   }
-  const authenticate = async (data: string) => {
+  async function authenticate(data: string){
     await Api.get("getuser", {
       headers: {
         Authorization: `Bearer ${data}`,
@@ -65,7 +65,12 @@ export default function Auth() {
       setUserExist(true);
       navigate("/todo");
     });
-  };
+  }
 
-  return { registerUser, loginUser, authorization, userExist, token, userData };
+  function logout(){
+    setAuthorization(false)
+    Cookies.remove('token')
+  }
+
+  return { registerUser, loginUser, authorization, userExist, token, userData, logout };
 }

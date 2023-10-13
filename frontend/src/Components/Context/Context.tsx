@@ -10,7 +10,7 @@ interface ContextProvider {
 const UserContext = createContext<ContextType>({} as ContextType)
 
 const UserProvider = ({children}:ContextProvider) =>{
-    const {registerUser,loginUser, authorization, userExist,token, userData} = Auth()
+    const {registerUser,loginUser, authorization, userExist,token, userData, logout} = Auth()
     return(
         <UserContext.Provider value={{
             registerUser,
@@ -18,7 +18,8 @@ const UserProvider = ({children}:ContextProvider) =>{
             token,
             loginUser,
             userExist,
-            userData
+            userData,
+            logout
         }}>
             {children}
         </UserContext.Provider>

@@ -41,13 +41,11 @@ const NavBarStyled = styled.div`
     gap: 15px;
   }
   footer{
-    /* background-color: red; */
     position: absolute;
     bottom: 0;
     width: 20rem;
     div{
       display: flex;
-      /* flex-direction: column; */
       width: 100%;
       align-items: center;
       border-top: 1px solid #fff;
@@ -56,6 +54,9 @@ const NavBarStyled = styled.div`
       font-size: 1.1rem;
       .icon{
         font-size: 1.3rem;
+      }
+      h2, .icon{
+        cursor: pointer;
       }
     }
   }
@@ -74,7 +75,7 @@ const LinkStyled = styled(Link)`
 
 
 export default function SignUp() {
-  const { authorization, userData } = useContext(UserContext);
+  const { authorization, userData,logout } = useContext(UserContext);
   let Image = '';
   let Name = '';
   ('image' in userData) ? Image = `http://localhost:3000/images/${userData.image}` : '';
@@ -101,8 +102,8 @@ export default function SignUp() {
             </LinkStyled>
           </main>
           <footer>
-            <div>
-              <LinkStyled to={'logout'}>Logout</LinkStyled>
+            <div onClick={logout}>
+              <h2>Logout</h2>
               <Bi.BiLogOut className="icon"/>
             </div>
           </footer>
