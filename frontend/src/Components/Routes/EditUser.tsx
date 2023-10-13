@@ -78,6 +78,7 @@ export default function EditUser() {
   } = useForm<FormRegister>();
   const onSubmit: SubmitHandler<FormRegister> = async (data: FormRegister) => {
     editUser(data, token)
+    window.location.reload();
   };
 
   useEffect(() => {
