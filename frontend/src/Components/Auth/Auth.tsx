@@ -1,12 +1,13 @@
 // import { useEffect } from "react";
 import { useState } from "react";
 import Api from "../Api/Api";
-import { FormLogin, FormRegister } from "../Types/Register";
+import { FormLogin, FormRegister } from "../Types/interface";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [authorization, setAuthorization] = useState<boolean>(false);
+  const [userData,setUserData] = useState({})
   const [userExist, setUserExist] = useState<boolean>(true);
   const [token, setToken] = useState<string>("");
   const navigate = useNavigate();
@@ -57,7 +58,8 @@ export default function Auth() {
         Authorization: `Bearer ${data}`,
       },
     }).then((response) => {
-      console.log(response);
+      console.log(response.data)
+      setUserData(response.data)
       setAuthorization(true);
       setToken(data);
       setUserExist(true);
@@ -65,5 +67,5 @@ export default function Auth() {
     });
   };
 
-  return { registerUser, loginUser, authorization, userExist, token };
+  return { registerUser, loginUser, authorization, userExist, token, userData };
 }

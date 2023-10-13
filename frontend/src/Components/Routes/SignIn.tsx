@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
 import { UserContext } from "../Context/Context";
-import { FormLogin } from "../Types/Register";
+import { FormLogin } from "../Types/interface";
 
 const SignUpStyled = styled.div`
   width: calc(100% - 20rem);

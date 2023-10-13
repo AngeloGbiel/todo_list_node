@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormRegister } from "../Types/Register";
+import { FormRegister } from "../Types/interface";
 import { useContext } from "react";
 import { UserContext } from "../Context/Context";
 // import Cookies from "js-cookie";
