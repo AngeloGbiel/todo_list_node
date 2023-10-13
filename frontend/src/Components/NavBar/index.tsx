@@ -3,10 +3,33 @@ import Profile from "../Assets/Profile.png";
 import * as Ai from "react-icons/ai";
 import * as Fi from "react-icons/fi";
 import * as Md from "react-icons/md";
-import * as Bi from 'react-icons/bi';
+import * as Bi from "react-icons/bi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../Context/Context";
+
+const HeaderLinkStyled = styled(Link)`
+  display: flex;
+  width: 100%;
+  padding: 30px 20px;
+  align-items: center;
+  gap: 21px;
+  border-bottom: 1px solid #fff;
+  color: white;
+  text-decoration: none;
+  .image {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites da div */
+  }
+  img {
+    height: 100%;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+`;
 
 const NavBarStyled = styled.div`
   height: 100vh;
@@ -19,7 +42,9 @@ const NavBarStyled = styled.div`
     align-items: center;
     gap: 21px;
     border-bottom: 1px solid #fff;
-    .image{
+    color: white;
+    text-decoration: none;
+    .image {
       height: 4rem;
       width: 4rem;
       border-radius: 50%;
@@ -40,11 +65,11 @@ const NavBarStyled = styled.div`
     padding: 30px 20px;
     gap: 15px;
   }
-  footer{
+  footer {
     position: absolute;
     bottom: 0;
     width: 20rem;
-    div{
+    div {
       display: flex;
       width: 100%;
       align-items: center;
@@ -52,10 +77,11 @@ const NavBarStyled = styled.div`
       padding: 30px 20px;
       gap: 15px;
       font-size: 1.1rem;
-      .icon{
+      .icon {
         font-size: 1.3rem;
       }
-      h2, .icon{
+      h2,
+      .icon {
         cursor: pointer;
       }
     }
@@ -71,26 +97,27 @@ const LinkStyled = styled(Link)`
   font-size: 1.2rem;
 `;
 
-
-
-
 export default function SignUp() {
-  const { authorization, userData,logout } = useContext(UserContext);
-  let Image = '';
-  let Name = '';
-  ('image' in userData) ? Image = `http://localhost:3000/images/${userData.image}` : '';
-  ('name' in userData) ? Name = `${userData.name}` : ''
+  const { authorization, userData, logout } = useContext(UserContext);
+  let Image = "";
+  let Name = "";
+  "image" in userData
+    ? (Image = `http://localhost:3000/images/${userData.image}`)
+    : "";
+  "name" in userData ? (Name = `${userData.name}`) : "";
   return (
     <NavBarStyled>
       {authorization ? (
         <>
-          <header>
+          <HeaderLinkStyled to={"edituser"}>
             <div className="image">
               {/* <img src={userData.image ? Image : Profile} alt="Profile" /> */}
-              <img src={('image' in userData) && userData.image ? Image : Profile}/>
+              <img
+                src={"image" in userData && userData.image ? Image : Profile}
+              />
             </div>
-            <h2>{('name' in userData) && userData.name ? Name : ''}</h2>
-          </header>
+            <h2>{"name" in userData && userData.name ? Name : ""}</h2>
+          </HeaderLinkStyled>
           <main>
             <LinkStyled to={"todo"} className="register">
               <p>To Do List</p>
@@ -104,7 +131,7 @@ export default function SignUp() {
           <footer>
             <div onClick={logout}>
               <h2>Logout</h2>
-              <Bi.BiLogOut className="icon"/>
+              <Bi.BiLogOut className="icon" />
             </div>
           </footer>
         </>

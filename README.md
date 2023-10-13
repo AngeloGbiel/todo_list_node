@@ -148,3 +148,12 @@ Caso apareça um erro do arquivo tsconfig.json, vamos adcionar a seguinte linha 
 ```
 
 Estrutura de Pastas
+- **Api**: Pasta onde fica a chamada da api através do axios
+- **Assets**: Pasta que contém apenas a imagem Profile caso o usuário não cadastre uma imagem no seu perfil
+- **Auth**: Pasta que lida com as autenticações
+  - **Auth.tsx**: lida com o registro, login e checa se o usuário existe, mantendo-o logado
+  - **RouterPrivateTodo.tsx**: Impede o usuário de acessar a rota Todo se não estiver autenticado
+- **Context**: Lida com os contextos da aplicação
+- **NavBar**: NavBar fixa da aplicação
+- **Routes**: Lida com as rotas: todo, registro, login, página 404 e de não autorizado
+- **Types**: Interfaces criados para manipulação de tipos mais facilmente

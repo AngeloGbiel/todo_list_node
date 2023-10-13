@@ -16,5 +16,11 @@ export interface ContextType {
     loginUser: (user: FormLogin) => void,
     userExist: boolean,
     userData: object,
-    logout: () => void
+    logout: () => void,
+    editUser: (data:FormEditUser, token: string) =>void
+}
+
+export interface FormEditUser {
+    name: string,
+    image: string[]
 }

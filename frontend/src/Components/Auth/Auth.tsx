@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
 import { useCallback, useEffect, useState } from "react";
 import Api from "../Api/Api";
-import { FormLogin, FormRegister } from "../Types/interface";
+import { FormEditUser, FormLogin, FormRegister } from "../Types/interface";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -79,5 +79,33 @@ export default function Auth() {
     Cookies.remove('token')
   }
 
-  return { registerUser, loginUser, authorization, userExist, token, userData, logout };
+  async function editUser(data:FormEditUser, token: string){
+    const UserData: Record<string, string> = {
+      // Record<string, string>: Isso é uma anotação de tipo em TypeScript.
+      // Indica que UserData é um objeto onde as chaves (propriedades) são
+      // strings e os valores associados a essas chaves também são strings.
+      // Em outras palavras, UserData é um objeto onde todas as chaves e valores
+      // são strings.
+
+      name: data.name,
+      image: data.image[0],
+    };
+
+    const formData = new FormData();
+    Object.keys(UserData).forEach((key) => {
+      formData.append(key, UserData[key]);
+    });
+
+    await Api.patch('/edit',formData,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(()=>{
+      navigate('/todo');
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  return { registerUser, loginUser, authorization, userExist, token, userData, logout,editUser };
 }
