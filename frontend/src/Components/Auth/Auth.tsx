@@ -1,5 +1,5 @@
 // import { useEffect } from "react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Api from "../Api/Api";
 import { FormLogin, FormRegister } from "../Types/interface";
 import Cookies from "js-cookie";
@@ -52,22 +52,29 @@ export default function Auth() {
         return err;
       });
   }
-  async function authenticate(data: string){
+  const authenticate = useCallback(async(data: string) => {
     await Api.get("getuser", {
       headers: {
         Authorization: `Bearer ${data}`,
       },
     }).then((response) => {
-      console.log(response.data)
       setUserData(response.data)
       setAuthorization(true);
       setToken(data);
       setUserExist(true);
       navigate("/todo");
     });
-  }
+  },[navigate])
+
+  useEffect(()=>{
+    if(Cookies.get('token')){
+      authenticate(Cookies.get('token')!)
+    }
+  },[authenticate])
 
   function logout(){
+    navigate('/login')
+    alert('Logout realizado')
     setAuthorization(false)
     Cookies.remove('token')
   }
