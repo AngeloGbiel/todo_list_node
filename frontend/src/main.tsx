@@ -4,7 +4,7 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import SignUp from './Components/Routes/SignUp.tsx'
 import SignIn from './Components/Routes/SignIn.tsx'
-import Todo from './Components/Routes/Todo.tsx'
+import RouterPrivateTodo from './Components/Auth/RouterPrivateTodo.tsx'
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/todo',
-        element: <Todo/> 
+        element: <RouterPrivateTodo/> 
       },
     ]
   }
