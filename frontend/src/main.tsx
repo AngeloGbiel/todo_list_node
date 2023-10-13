@@ -5,11 +5,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import SignUp from './Components/Routes/SignUp.tsx'
 import SignIn from './Components/Routes/SignIn.tsx'
 import RouterPrivateTodo from './Components/Auth/RouterPrivateTodo.tsx'
+import NotFoundPage from './Components/Routes/404.tsx'
 
 const router = createBrowserRouter([
   {
     path:"/",
     element: <App/>,
+    errorElement: <NotFoundPage/>,
     children: [
       {
         path: '/register',
