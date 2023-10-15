@@ -27,7 +27,6 @@ export default function EditUserTodo(){
         AllTasks()
     },[])
 
-    console.log(tasks)
     return(
         <TodoSyled>
             <h2>Todo List</h2>

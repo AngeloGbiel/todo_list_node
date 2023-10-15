@@ -32,6 +32,16 @@ const UserProvider = ({ children }: ContextProvider) => {
     });
   };
 
+  const DeleteTask = async (id: number) => {
+    Api.delete(`/todo/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(()=>{
+        AllTasks()
+    });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -44,7 +54,8 @@ const UserProvider = ({ children }: ContextProvider) => {
         logout,
         editUser,
         AllTasks,
-        tasks
+        tasks,
+        DeleteTask,
       }}
     >
       {children}

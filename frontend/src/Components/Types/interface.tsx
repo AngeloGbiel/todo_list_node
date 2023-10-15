@@ -1,4 +1,5 @@
 export interface Itodo {
+    id: number
     task: string
     priority: boolean
 }
@@ -24,7 +25,8 @@ export interface ContextType {
     logout: () => void,
     editUser: (data:FormEditUser, token: string) =>void,
     AllTasks: () => void,
-    tasks: Itodo[]
+    tasks: Itodo[],
+    DeleteTask: (id:number) => void
 }
 
 export interface FormEditUser {

@@ -2,6 +2,8 @@ import styled from "styled-components"
 // import * as Gr from 'react-icons/gr'
 import * as Md from 'react-icons/md'
 import { Itodo } from "../Types/interface"
+import { useContext } from "react"
+import { UserContext } from "../Context/Context"
 
 const TasksStyled = styled.div`
     display: flex;
@@ -37,7 +39,10 @@ interface IItemProps {
     itemList: Itodo
 }
 
+
 export default function Tasks({itemList}:IItemProps){
+    const {DeleteTask} = useContext(UserContext)
+
     return(
         <TasksStyled>
             <div className="container">
@@ -45,7 +50,9 @@ export default function Tasks({itemList}:IItemProps){
                 <div className='buttons'>
                     <Md.MdPriorityHigh/>
                     <Md.MdModeEditOutline/>
-                    <Md.MdDelete/>
+                    <div onClick={() =>DeleteTask(itemList.id)}>
+                        <Md.MdDelete/>
+                    </div>
                 </div>
             </div>
         </TasksStyled>
