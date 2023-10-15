@@ -1,12 +1,10 @@
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Api from "../Api/Api";
 import { useContext } from "react";
 import { UserContext } from "../Context/Context";
 import styled from "styled-components";
+import {FormProps} from '../Types/interface'
 
-interface FormProps {
-  task: string;
-}
 
 const FormStyled = styled.div`
   display: flex;
@@ -20,48 +18,66 @@ const FormStyled = styled.div`
     display: flex;
     gap: 10px;
     border-radius: 5px;
-    background: #FFF;
-    input[type=text]{
-        width: 90%;
-        height: 2.3rem;
-        /* margin: 10px; */
-        border-radius: 10px;
-        border: none;
-        outline: none;
-        padding-left: 10px;
-        background: #031621;
-        color: white;
-        font-size: 1.06rem;
+    background: #fff;
+    input[type="text"] {
+      width: 90%;
+      height: 2.3rem;
+      /* margin: 10px; */
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      padding-left: 10px;
+      background: #031621;
+      color: white;
+      font-size: 1.06rem;
     }
-    input[type=submit]{
-        width: 10%;
-        border-radius: 10px;
-        border: none;
-        background: #031621;
-        color: white;
-        cursor: pointer;
+    input[type="submit"] {
+      width: 10%;
+      border-radius: 10px;
+      border: none;
+      background: #031621;
+      color: white;
+      cursor: pointer;
     }
   }
 `;
 
 export default function Form() {
-  const { token,AllTasks } = useContext(UserContext);
+  const { token, AllTasks, edit,TaskEdit,id,setEdit } = useContext(UserContext);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<FormProps>();
-  const onSubmit: SubmitHandler<FormProps> = async (data: FormProps) => {
-    await Api.post("/todo/add", data, {
+  const AddTask: SubmitHandler<FormProps> = async (data: FormProps) => {
+    await Api.post(`/todo/add`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then(() => {
         console.log("Tarefa adcionada");
-        AllTasks()
-        reset() //Limpa após a tarefa ser adcionada no banco de dados
+        AllTasks();
+        reset(); //Limpa após a tarefa ser adcionada no banco de dados
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const EditTask: SubmitHandler<FormProps> = async (data: FormProps) => {
+    console.log(data)
+    await Api.patch(`/todo/edit/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(() => {
+        console.log("Tarefa atualizada");
+        AllTasks();
+        reset(); //Limpa após a tarefa ser adcionada no banco de dados
+        setEdit(false)
       })
       .catch((err) => {
         console.log(err);
@@ -70,22 +86,33 @@ export default function Form() {
 
   return (
     <FormStyled>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Add Task"
-          className="form"
-          {...register("task", { required: true })}
-        />
-        {errors?.task?.type === "required" && (
-          <span>This field is required</span>
-        )}
-        <input 
-            type="submit"
-            value="+"
-            className="submit"
-        />
-      </form>
+      {edit ? (
+        <>
+          <form onSubmit={handleSubmit(EditTask)}>
+            <input
+              type="text"
+              placeholder="Add Task"
+              className="form"
+              {...register("task", { required: false })}
+              defaultValue={TaskEdit}
+            />
+            <input type="submit" value="✔️" className="submit" />
+          </form>
+        </>
+      ) : (
+        <>
+          <form onSubmit={handleSubmit(AddTask)}>
+            <input
+              type="text"
+              placeholder="Add Task"
+              className="form"
+              {...register("task", { required: false })}
+              defaultValue={''}
+            />
+            <input type="submit" value="+" className="submit" />
+          </form>
+        </>
+      )}
     </FormStyled>
   );
 }

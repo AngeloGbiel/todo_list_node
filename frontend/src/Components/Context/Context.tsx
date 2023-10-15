@@ -10,6 +10,9 @@ interface ContextProvider {
 const UserContext = createContext<ContextType>({} as ContextType);
 
 const UserProvider = ({ children }: ContextProvider) => {
+  const [edit, setEdit] = useState<boolean>(false)
+  const [id,setId] = useState<number>()
+  const [TaskEdit,setTaskEdit] = useState<string>('')
   const [tasks, setTasks] = useState<Itodo[]>([]);
   const {
     registerUser,
@@ -42,6 +45,18 @@ const UserProvider = ({ children }: ContextProvider) => {
     });
   };
 
+  const GetTaskForEdit = async(id:number) =>{
+    await Api.get(`/todo/get/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((response)=>{
+      setTaskEdit(response.data.task)
+      setId(response.data.id)
+      setEdit(true)
+    })
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -56,6 +71,11 @@ const UserProvider = ({ children }: ContextProvider) => {
         AllTasks,
         tasks,
         DeleteTask,
+        edit,
+        TaskEdit,
+        GetTaskForEdit,
+        id,
+        setEdit
       }}
     >
       {children}

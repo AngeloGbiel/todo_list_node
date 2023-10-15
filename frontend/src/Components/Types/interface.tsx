@@ -4,6 +4,10 @@ export interface Itodo {
     priority: boolean
 }
 
+export interface FormProps {
+    task: string;
+}
+
 export interface FormRegister {
     name:  string;
     email: string;
@@ -26,7 +30,12 @@ export interface ContextType {
     editUser: (data:FormEditUser, token: string) =>void,
     AllTasks: () => void,
     tasks: Itodo[],
-    DeleteTask: (id:number) => void
+    DeleteTask: (id:number) => void,
+    edit: boolean,
+    TaskEdit: string,
+    GetTaskForEdit: (id:number)=>void,
+    id: number | undefined //mudar depois,
+    setEdit: (edit: boolean) => void
 }
 
 export interface FormEditUser {
