@@ -11,6 +11,8 @@ interface FormProps {
 const FormStyled = styled.div`
   display: flex;
   justify-content: center;
+  /* background-color: yellow; */
+  padding-bottom: 1.5rem;
   form {
     width: 55%;
     background-color: #ffffff;
@@ -43,7 +45,7 @@ const FormStyled = styled.div`
 `;
 
 export default function Form() {
-  const { token } = useContext(UserContext);
+  const { token,AllTasks } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -58,6 +60,7 @@ export default function Form() {
     })
       .then(() => {
         console.log("Tarefa adcionada");
+        AllTasks()
         reset() //Limpa após a tarefa ser adcionada no banco de dados
       })
       .catch((err) => {

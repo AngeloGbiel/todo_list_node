@@ -1,3 +1,8 @@
+export interface Itodo {
+    task: string
+    priority: boolean
+}
+
 export interface FormRegister {
     name:  string;
     email: string;
@@ -17,7 +22,9 @@ export interface ContextType {
     userExist: boolean,
     userData: object,
     logout: () => void,
-    editUser: (data:FormEditUser, token: string) =>void
+    editUser: (data:FormEditUser, token: string) =>void,
+    AllTasks: () => void,
+    tasks: Itodo[]
 }
 
 export interface FormEditUser {

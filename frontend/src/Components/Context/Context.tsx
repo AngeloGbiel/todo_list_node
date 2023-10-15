@@ -1,6 +1,7 @@
-import { ReactNode, createContext } from "react";
-import { ContextType } from "../Types/interface";
+import { ReactNode, createContext, useState } from "react";
+import { ContextType, Itodo } from "../Types/interface";
 import Auth from "../Auth/Auth";
+import Api from "../Api/Api";
 
 interface ContextProvider {
   children: ReactNode;
@@ -9,6 +10,7 @@ interface ContextProvider {
 const UserContext = createContext<ContextType>({} as ContextType);
 
 const UserProvider = ({ children }: ContextProvider) => {
+  const [tasks, setTasks] = useState<Itodo[]>([]);
   const {
     registerUser,
     loginUser,
@@ -19,6 +21,17 @@ const UserProvider = ({ children }: ContextProvider) => {
     logout,
     editUser,
   } = Auth();
+
+  const AllTasks = () => {
+    Api.get("/todo/all", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      setTasks(response.data);
+    });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -29,7 +42,9 @@ const UserProvider = ({ children }: ContextProvider) => {
         userExist,
         userData,
         logout,
-        editUser
+        editUser,
+        AllTasks,
+        tasks
       }}
     >
       {children}
