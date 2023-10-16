@@ -7,6 +7,10 @@ import { UserContext } from "../Context/Context";
 
 const SignUpStyled = styled.div`
   width: calc(100% - 20rem);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
   display: flex;
   align-items: center;
   justify-content: center;

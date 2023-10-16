@@ -35,6 +35,7 @@ const NavBarStyled = styled.div`
   height: 100vh;
   width: 20rem;
   background-color: #031621;
+  position: fixed;
   header {
     display: flex;
     width: 100%;
@@ -98,7 +99,7 @@ const LinkStyled = styled(Link)`
 `;
 
 export default function SignUp() {
-  const { authorization, userData, logout } = useContext(UserContext);
+  const { authorization, userData, logout, setEdit } = useContext(UserContext);
   let Image = "";
   let Name = "";
   "image" in userData
@@ -123,7 +124,7 @@ export default function SignUp() {
               <p>To Do List</p>
               <Ai.AiOutlineUnorderedList />
             </LinkStyled>
-            <LinkStyled to={"priority"} className="login">
+            <LinkStyled to={"priority"} onClick={()=>setEdit(false)} className="login">
               <p>Priority</p>
               <Md.MdPriorityHigh />
             </LinkStyled>

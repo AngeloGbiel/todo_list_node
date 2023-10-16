@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import Api from "../Api/Api";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import styled from "styled-components";
 import {FormProps} from '../Types/interface'
@@ -64,6 +64,9 @@ export default function Form() {
         console.log(err);
       });
   };
+  useEffect(()=>{
+    reset()
+  },[edit, reset])
 
   const EditTask: SubmitHandler<FormProps> = async (data: FormProps) => {
     console.log(data)
@@ -75,7 +78,6 @@ export default function Form() {
       .then(() => {
         console.log("Tarefa atualizada");
         AllTasks();
-        reset(); //Limpa após a tarefa ser adcionada no banco de dados
         setEdit(false)
       })
       .catch((err) => {

@@ -7,6 +7,8 @@ import { Itodo } from "../Types/interface";
 
 const TodoSyled = styled.div`
     width: calc(100% - 20rem);
+    position: absolute;
+    right: 0;
     h2{
         text-align: center;
         font-family: 'Mr Dafoe', cursive;
@@ -23,9 +25,11 @@ type UserContextType = {
 
 export default function EditUserTodo(){
     const {AllTasks, tasks} = useContext(UserContext) as UserContextType;
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(()=>{
         AllTasks()
-    },[])
+    },[])  
+    /* eslint-disable react-hooks/exhaustive-deps */
 
     return(
         <TodoSyled>

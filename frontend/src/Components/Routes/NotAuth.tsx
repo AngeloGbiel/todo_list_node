@@ -2,8 +2,12 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const NotAuthStyled = styled.div`
+    width: calc(100% - 20rem);
     font-size: 2rem;
-    margin: 2rem;
+    margin: 2rem 0;
+    padding-left: 1rem;
+    right: 0;
+    position: absolute;
 `
 
 export default function NotAuth(){

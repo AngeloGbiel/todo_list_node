@@ -45,6 +45,7 @@ const UserProvider = ({ children }: ContextProvider) => {
       },
     }).then(()=>{
         AllTasks()
+        setEdit(false)
     });
   };
 
@@ -68,7 +69,7 @@ const UserProvider = ({ children }: ContextProvider) => {
         Authorization: `Bearer ${token}`
       }
     }).then(()=>{
-      console.log('Prioridade alterada')
+      setEdit(false)
       AllTasks()
     }).catch((err)=>{
       console.log(err)
