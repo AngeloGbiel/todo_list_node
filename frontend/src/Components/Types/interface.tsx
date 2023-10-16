@@ -35,7 +35,10 @@ export interface ContextType {
     TaskEdit: string,
     GetTaskForEdit: (id:number)=>void,
     id: number | undefined //mudar depois,
-    setEdit: (edit: boolean) => void
+    setEdit: (edit: boolean) => void,
+    SetPriority: (id:number)=>void,
+    setSearch: (search:string) => void,
+    search: string
 }
 
 export interface FormEditUser {

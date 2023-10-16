@@ -7,6 +7,7 @@ import SignIn from './Components/Routes/SignIn.tsx'
 import RouterPrivateTodo from './Components/Auth/RouterPrivateTodo.tsx'
 import NotFoundPage from './Components/Routes/404.tsx'
 import RouterPrivateEditUser from './Components/Auth/RouterPrivateEditUser.tsx'
+import RouterPrivatePriority from './Components/Auth/RouterPrivatePriority.tsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: 'edituser',
         element: <RouterPrivateEditUser/>
+      },
+      {
+        path: 'priority',
+        element: <RouterPrivatePriority/>
       }
     ]
   }

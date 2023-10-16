@@ -41,14 +41,16 @@ interface IItemProps {
 
 
 export default function Tasks({itemList}:IItemProps){
-    const {DeleteTask,GetTaskForEdit} = useContext(UserContext)
+    const {DeleteTask,GetTaskForEdit,SetPriority} = useContext(UserContext)
 
     return(
         <TasksStyled>
             <div className="container">
                 <p>{itemList.task}</p>
                 <div className='buttons'>
-                    <Md.MdPriorityHigh/>
+                    <div onClick={()=>SetPriority(itemList.id)}>
+                        <Md.MdPriorityHigh/>
+                    </div>
                     <div onClick={()=>GetTaskForEdit(itemList.id)}>
                         <Md.MdModeEditOutline/>
                     </div>

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Form from "../Todo/Form";
 import Tasks from "../Todo/Tasks";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/Context";
 import { Itodo } from "../Types/interface";
+import SearchPriority from "../Todo/SearchPriority";
 
 const TodoSyled = styled.div`
     width: calc(100% - 20rem);
@@ -18,22 +18,26 @@ const TodoSyled = styled.div`
 
 type UserContextType = {
     AllTasks: () => void;
-    tasks: Itodo[]; // Substitua 'any' pelo tipo de dados esperado em tasks
+    tasks: Itodo[]; // Substitua 'any' pelo tipo de dados esperado em tasks,
+    search: string
 };
 
 export default function EditUserTodo(){
-    const {AllTasks, tasks} = useContext(UserContext) as UserContextType;
+    const {AllTasks, tasks, search} = useContext(UserContext) as UserContextType;
     useEffect(()=>{
         AllTasks()
     },[])
 
     return(
         <TodoSyled>
-            <h2>Todo List</h2>
-            <Form/>
+            <h2>Priority</h2>
+            <SearchPriority/>
             {
                 tasks.filter((value)=>{
-                    return value.priority == false
+                    return value.priority == true
+                }).filter((value)=>{
+                    const taskNormalized = value.task.toLowerCase()
+                    return taskNormalized.includes(search)
                 }).map((value,i)=>{
                    return(
                     <div key={i}>

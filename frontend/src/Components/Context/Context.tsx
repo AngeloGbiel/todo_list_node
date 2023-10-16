@@ -2,6 +2,7 @@ import { ReactNode, createContext, useState } from "react";
 import { ContextType, Itodo } from "../Types/interface";
 import Auth from "../Auth/Auth";
 import Api from "../Api/Api";
+import { useNavigate } from "react-router-dom";
 
 interface ContextProvider {
   children: ReactNode;
@@ -10,6 +11,8 @@ interface ContextProvider {
 const UserContext = createContext<ContextType>({} as ContextType);
 
 const UserProvider = ({ children }: ContextProvider) => {
+  const navigate = useNavigate()
+  const [search,setSearch] = useState<string>('')
   const [edit, setEdit] = useState<boolean>(false)
   const [id,setId] = useState<number>()
   const [TaskEdit,setTaskEdit] = useState<string>('')
@@ -52,9 +55,25 @@ const UserProvider = ({ children }: ContextProvider) => {
       }
     }).then((response)=>{
       setTaskEdit(response.data.task)
+      navigate('/todo')
       setId(response.data.id)
       setEdit(true)
     })
+  }
+
+  const SetPriority = async(id:number)=>{
+    console.log(token,'\n', id)
+    Api.patch(`/todo/priority/${id}`,id,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(()=>{
+      console.log('Prioridade alterada')
+      AllTasks()
+    }).catch((err)=>{
+      console.log(err)
+    })
+
   }
 
   return (
@@ -75,7 +94,10 @@ const UserProvider = ({ children }: ContextProvider) => {
         TaskEdit,
         GetTaskForEdit,
         id,
-        setEdit
+        setEdit,
+        SetPriority,
+        setSearch,
+        search
       }}
     >
       {children}

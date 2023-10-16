@@ -48,7 +48,6 @@ export default function Form() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm<FormProps>();
   const AddTask: SubmitHandler<FormProps> = async (data: FormProps) => {
     await Api.post(`/todo/add`, data, {
