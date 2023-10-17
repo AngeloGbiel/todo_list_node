@@ -34,3 +34,16 @@ services:
       - ./backend/:/backend
     depends_on:
       - db
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: app_frontend_react
+    restart: always
+    ports:
+      - 80:4000
+    volumes:
+      - ./frontend/:/frontend
+    depends_on:
+      - db
