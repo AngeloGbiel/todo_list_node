@@ -206,3 +206,18 @@ app.use((req, res, next) => {
     next();
 });
 ```
+
+## Arquivo de instalação
+
+Haverá um arquivo **.sh** para instalação do docker, docker-compose, minikube, kubectl e git.
+
+Ao baixar ou copiar o código desse arquivo, devemos executar o seguinte comando:
+```bash
+sudo chmod +x <nome_arquivo> # torna o arquivo um executável
+./nome_arquivo
+```
+
+Ou, ao invés de torná-lo um executável, vamos executar o seguinte comando
+```bash
+bash nome_arquivo
+```
