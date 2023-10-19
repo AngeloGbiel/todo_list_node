@@ -22,13 +22,15 @@ type UserContextType = {
     AllTasks: () => void;
     tasks: Itodo[]; // Substitua 'any' pelo tipo de dados esperado em tasks,
     search: string
+    setSearch: (search:string) => void
 };
 
 export default function EditUserTodo(){
-    const {AllTasks, tasks, search} = useContext(UserContext) as UserContextType;
+    const {AllTasks, tasks, search,setSearch} = useContext(UserContext) as UserContextType;
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(()=>{
         AllTasks()
+        setSearch('')
     },[])
     /* eslint-disable react-hooks/exhaustive-deps */
 
