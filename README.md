@@ -1,8 +1,5 @@
 # Todo List
-
-## Objetivo Principal
-
-O usuário terá uma **home** falando um pouco sobre o site, e duas possibilidades: se registrar ou efetuar o login. Após efetuar o login, o **header** irá mudar, e vai mostrar: **home, todo, logout**. A opção (rota) Todo só ficará disponível após o usuário se cadastrar (rota privada), pois, dentro dessa rota, ficará as informações da lista de tarefa de cada usuário
+O usuário poderá se cadastrar, criar tarefas, e vê-las sempre que estiver logado. Ele poderá editar, apagar e tornar as tasks como prioridade. Além disso, pode editar o nome e a imagem do seu perfil, e fazer logout
 
 # Backend
 
@@ -119,10 +116,16 @@ Estrutura de Pastas
 - **Assets**: Pasta que contém apenas a imagem Profile caso o usuário não cadastre uma imagem no seu perfil
 - **Auth**: Pasta que lida com as autenticações
   - **Auth.tsx**: lida com o registro, login e checa se o usuário existe, mantendo-o logado
-  - **RouterPrivateTodo.tsx**: Impede o usuário de acessar a rota Todo se não estiver autenticado
+  - **RouterPrivateTodo.tsx**: Impede o usuário de acessar a rota **Todo** se não estiver autenticado
+  - **RouterPrivateEditUser.tsx**: Impede o usuário de acessar a rota **EditUser** se não estiver autenticado
+  - **RouterPrivatePriority.tsx**: Impede o usuário de acessar a rota **Priority** se não estiver autenticado
 - **Context**: Lida com os contextos da aplicação
 - **NavBar**: NavBar fixa da aplicação
-- **Routes**: Lida com as rotas: todo, registro, login, página 404 e de não autorizado
+- **Routes**: Lida com as rotas: todo, registro, login, página 404 e de não autorizado, priority e edit user
+- **todo**: alguns arquivos de visualização do site
+  - **Form.tsx**: responsável por criar as tasks no banco de dados
+  - **SearchPriority.tsx** campo de busca dentro da rota priority
+  - **tasks.tsx**: arquivo onde é estruturado as tasks, e chamado dentro do **Todo.tsx** ou **priority.tsx** por meio do método **map**
 - **Types**: Interfaces criados para manipulação de tipos mais facilmente
 
 ## Dockerizando a aplicação
