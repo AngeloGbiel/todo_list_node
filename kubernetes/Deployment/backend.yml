@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+spec: 
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: angelogbiel/todolist-backend:latest
+        name: backend
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend

@@ -224,3 +224,52 @@ Ou, ao invés de torná-lo um executável, vamos executar o seguinte comando
 ```bash
 bash nome_arquivo
 ```
+
+## Kubernetes
+
+Agora, para orquestrar os containers com o kubernetes, vamos realizar os seguintes passos:
+- Criar uma pasta para Deployment (criação e gerenciamento de pods) e para o Service (comunicação entre os pods de forma interna (ClusterIp) e externa (NodePort)).
+- Vamos criar dois repositórios no https://hub.docker.com/, um para o frontend e o outro para o backend.
+- Agora, vamos editar o arquivo **index.js** do backend e o **Api.tsx** no frontend
+  - No arquivo index.js, vamos colocar a origin "http://192.168.49.2:31000" no cors e no Access-Control-Allow-Origin.
+  - No arquivo Api.tsx, vamos colocar "http://192.168.49.2:32000" na baseURl
+    - O driver docker por padrão usa o endereço IP **192.168.49.2**
+- Vamos criar tags das nossas images e mandar para o repositório 
+```sh
+# o Username é o nome do seu docker hub, e o name_repository é o nome do repositório criado
+docker tag <nome_image> <username/name_repository> 
+```
+exemplo: 
+```bash 
+docker tag todo_list_node-frontend angelogbiel/todolist-frontend:v1
+docker tag todo_list_node-backend angelogbiel/todolist-backend:v1
+```
+- Agora, vamos fazer login pelo terminal no docker hub
+```bash
+docker login
+```
+- E por fim, vamos enviar as imagens para o repositório
+```bash
+docker push <username/name_repository>
+```
+Exemplo:
+```bash
+docker push angelogbiel/todolist-backend:v1
+docker push angelogbiel/todolist-frontend:v1
+```
+- Agora, vamos criar nossos arquivos de deployment e service.
+  - O Service do db será um ClusterIp, ou seja, só haverá comunicação interna.
+  - O Service do frontend será um NodePort, ou seja, heverá comunicação com o exterior
+  - O Service do backend será um NodePort, ou seja, heverá comunicação com o exterior
+  - O Service do phpMyAdmin será um NodePort, ou seja, heverá comunicação com o exterior
+- Por fim, vamos utilizar os seguintes comandos:
+```bash
+kubectl create -f Deployment/ --save-config #Cria todos os deployment
+kubectl create -f Service/ --save-config #Cria todos os services
+kubectl get all #vê os status de todos os pods
+minikube service list #exibe a url para acesso externo
+
+kubectl replace -f <nome> #Caso haja alguma alteração, posso aplicá-la com esse comando
+```
+
+Nesse caso, o uso de imagens não irá funcionar, para isso precisariamos usar um sistema de armazenamento externo, em nuvem (como a AWS - S3) ou local (como um volume persistente), onde não será o caso desse projeto.

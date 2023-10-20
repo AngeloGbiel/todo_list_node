@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: phpmyadmin
+  name: phpmyadmin
+spec: 
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - image: phpmyadmin/phpmyadmin
+          name: phpmyadmin
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: Ab12345*
+          - name: MYSQL_DATABASE
+            value: todolist
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
